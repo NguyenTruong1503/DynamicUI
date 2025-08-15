@@ -1,0 +1,50 @@
+{
+  "GLOBAL": {
+    "SAVE": "Lưu",
+    "CREATE": "Tạo",
+    "CLEAR": "Làm mới",
+    "DELETE": "Xoá"
+
+  },
+  "MODULE": {
+    "TITLE_FORM": "Tạo mới Module",
+    "CONTENT_DROPDOWN": "Chọn Module",
+    "TITLE": "Thông tin Module"
+  },
+  "SCREEN": {
+    "CONTENT_DROPDOWN": "Chọn Screen",
+    "TITLE_FORM": "Tạo mới Screen",
+    "TITLE": "Thông tin Screen"
+  },
+  "MODAL": {
+    "TITLE_FORM": "Tạo mới Modal",
+    "TITLE": "Thông tin Modal",
+    "CONTENT_DROPDOWN": "Chọn Modal"
+  },
+  "INPUT": {
+    "TITLE_FORM": "Tạo mới Input",
+    "TITLE": "Thông tin Input"
+  },
+  "BUTTON": {
+    "TITLE_FORM": "Tạo mới Button",
+    "TITLE": "Thông tin Button"
+  },
+  "FILTER": {
+    "TITLE_FORM": "Tạo mới Filter",
+    "TITLE": "Thông tin Filter"
+  },
+  "GRIDHEADER": {
+    "TITLE_FORM": "Tạo mới GridHeader",
+    "TITLE": "Thông tin GridHeader"
+  },
+  "PARAMETER": {
+    "TITLE_FORM": "Tạo mới Parameter",
+    "TITLE": "Thông tin Parameter",
+    "CONTENT_DROPDOWN": "Chọn Parameter"
+  },
+  "CSSSTYLE": {
+    "TITLE_FORM": "Tạo mới CssStyle",
+    "TITLE": "Thông tin CssStyle",
+    "CONTENT_DROPDOWN": "Chọn Style"
+  }
+}

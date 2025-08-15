@@ -1,0 +1,145 @@
+<div class="container-root">
+  <div class="row h-100">
+    <!--    Left: Table-->
+    <div class="col-8 d-flex flex-column section-list border-end h-100">
+      <div class=" w-25" style="height: 6%">
+        <ejs-dropdownlist [dataSource]="listScreenWithAll" [fields]="{text:'ScreenName', value: 'ScreenID'}"
+                          [(ngModel)]="valueSearchByScreen" [placeholder]="'ChooseScreen' | translate" [allowFiltering]="true"
+                          name="FilterByScreen" (ngModelChange)="onChangeByScreen($event)">
+        </ejs-dropdownlist>
+      </div>
+      <div style="height: 94%">
+        <ejs-grid #grid [dataSource]="listModal" [allowPaging]="true" [pageSettings]="pageOptions" [allowResizing]="true" [allowSorting]="true"
+                  [allowFiltering]="true" [filterSettings]="filterSetting" [toolbar]="modalToolbar"
+                  [showColumnMenu]="true" [frozenColumns]="1"
+                  height="100%" (rowSelected)="onActivate($event)" [enableHover]="gridConfig.enableHover">
+          <e-columns>
+            <e-column headerText="STT" width="100" textAlign="Center" [allowFiltering]="false">
+              <ng-template #template let-data>
+                <strong class="text-center">{{getRowIndex(data)}}</strong>
+              </ng-template>
+            </e-column>
+            <e-column field="ModalCode" headerText="Modal Code" width="160" [allowFiltering]="true"></e-column>
+            <e-column field="ModalName" headerText="Modal Name" width="160" [allowFiltering]="true"></e-column>
+            <e-column field="Type" headerText="Type" width="100" textAlign="Center" [allowFiltering]="true"></e-column>
+            <e-column field="IsActive" headerText="Is Active" width="120" [allowFiltering]="true">
+              <ng-template #template let-data>
+                <div class="text-center">
+                  <input type="checkbox" class="form-check-input" [checked]="data.IsActive" style="pointer-events: none" />
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column field="DisplayOrder" headerText='Display Order' textAlign="Center" width="160" [allowFiltering]="true"></e-column>
+            <e-column field="Description" headerText="Description" width="200" [allowFiltering]="true"></e-column>
+            <e-column field="Numerical" headerText="Numerical" textAlign="Center" width="120" [allowFiltering]="true"></e-column>
+            <e-column field="ImageIcon" headerText="ImageIcon" width="120" [allowFiltering]="true"></e-column>
+            <e-column field="StyleCode" headerText="StyleCode" width="120" textAlign="Center" [allowFiltering]="true"></e-column>
+            <e-column field="IsCheckRole" headerText="IsCheckRole" width="140" [allowFiltering]="true">
+              <ng-template #template let-data>
+                <div class="text-center">
+                  <input type="checkbox" class="form-check-input" [checked]="data.IsCheckRole" style="pointer-events: none" />
+                </div>
+              </ng-template>
+            </e-column>
+          </e-columns>
+        </ejs-grid>
+      </div>
+    </div>
+    <!--Right: form-->
+    <div class="col-4 p-4 bg-form h-100">
+      <h5 class="fw-bold mb-4">{{'Create' | translate}}</h5>
+      <form name="formModal" #f="ngForm" novalidate (ngSubmit)="f.form.valid &&onInsertUpdate()">
+        <div class="row mb-3">
+          <div class="col">
+            <label class="form-label" for="screenid">Screen:</label>
+            <ejs-dropdownlist #screenid='ngModel' id="screenid" [dataSource]="listScreen" [fields]="{text: 'ScreenName', value:'ScreenID'}"
+            [(ngModel)]="valueModal.ScreenID" [placeholder]="'ChooseScreen' | translate" [allowFiltering]="true" name="screenOfModal">
+            </ejs-dropdownlist>
+            <span *ngIf="f.submitted && screenid.invalid" class="invalid-feedback">
+              Screen is required.
+            </span>
+          </div>
+          <div class="col">
+            <label class="form-label">Code:</label>
+            <input
+              name="codeModal"
+              class="form-control"
+              type="text"
+              [(ngModel)]="valueModal.ModalCode"
+              #codeModal="ngModel"
+              required
+              [ngClass]="{ 'is-invalid': f.submitted && codeModal.invalid }"
+            />
+            <span *ngIf="f.submitted && codeModal.invalid" class="invalid-feedback">
+              Code is required.
+            </span>
+          </div>
+
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label class="form-label" for="nameId">Name:</label>
+            <input class="form-control" id="nameId" type="text" name="nameModal" [(ngModel)]="valueModal.ModalName"
+                   #nameModal='ngModel' [ngClass]="{'is-invalid' : f.submitted && nameModal.invalid} " required/>
+            <span *ngIf="f.submitted && nameModal.invalid" class="invalid-feedback">
+            Name is required.
+          </span>
+          </div>
+          <div class="col">
+            <label class="form-label" for="imageIconid">Image Icon:</label>
+            <input class="form-control" type="text" name="imageIcon" id="imageIconid"
+                   [(ngModel)]="valueModal.ImageIcon"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label class="form-label" for="typeid">Type:</label>
+            <input type="text" name="type" id="typeid" class="form-control" [(ngModel)]="valueModal.Type">
+          </div>
+          <div class="col">
+            <label class="form-label">Description:</label>
+            <input class="form-control" type="text" name="desc" [(ngModel)]="valueModal.Description"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label class="form-label">Display Order:</label>
+            <input type="number" name="displayOrder" class="form-control" [(ngModel)]="valueModal.DisplayOrder">
+          </div>
+          <div class="col">
+            <label class="form-label">Numerical:</label>
+            <input class="form-control" type="number" name="numerical" [(ngModel)]="valueModal.Numerical"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <label class="form-label">Style:</label>
+            <ejs-dropdownlist [dataSource]="listStyleCss" [fields]="{text: 'StyleCode', value:'StyleCode'}"
+                              [(ngModel)]="valueModal.StyleCode" [placeholder]="'ChooseStyle' | translate" [allowFiltering]="true" name="styleOfModal">
+              <ng-template #itemTemplate let-data>
+                <div>{{data.StyleName}} --- {{data.StyleCode}}</div>
+              </ng-template>
+            </ejs-dropdownlist>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class=" col-12 d-flex flex-column flex-lg-row  gap-2 gap-lg-5">
+            <label class="form-check-label"><input class="form-check-input" type="checkbox" name="isCheckRole"
+                                                   [(ngModel)]="valueModal.IsCheckRole"/> Is Check Role</label>
+            <label class="form-check-label"><input class="form-check-input" type="checkbox" name="isActive"
+                                                   [(ngModel)]="valueModal.IsActive"/> Is Active</label>
+          </div>
+        </div>
+        <div class="d-flex gap-3 flex-column flex-xl-row">
+          <button type="submit" class="btn btn-success w-100 w-xl-auto" [disabled]="is_Check_Update ? ( !f.dirty || !f.valid) : !f.valid">{{ is_Check_Update ? ('Update' | translate) : ('Create' | translate) }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary w-100 w-xl-auto" (click)="onClear(f)">{{'Clear' | translate}}
+          </button>
+          <button [disabled]="valueModal.ModalID === 0" class="btn btn-danger w-100 w-xl-auto"
+                  (click)="onDeleteModal()">{{'Delete' | translate}}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

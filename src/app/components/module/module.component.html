@@ -1,0 +1,114 @@
+<div class="container-root">
+  <div class="row h-100">
+    <!-- Left: Table and search -->
+    <div class="col-8 d-flex flex-column section-list border-end h-100">
+      <!--Grid Data-->
+      <ejs-grid #grid [dataSource]="listModules" id="listModule" [allowPaging]="true" [pageSettings]="pageOptions" [allowSorting]="true"
+                [showColumnMenu]="true" [allowResizing]="true" [allowFiltering]="true" [filterSettings]='filterSettings' height="100%"
+                (rowSelected)="onActivate($event)" (rowDeselected)="onDeSelected($event)" [toolbar]="gridToolbar" [frozenColumns]="1"
+                [enableHover]="gridConfig.enableHover">
+        <e-columns>
+          <e-column field="RowIndex" headerText="STT" width="74" textAlign="Center"
+                    [allowFiltering]="false"></e-column>
+          <e-column field="ModuleCode" headerText="Module Code" width="150" [allowFiltering]="false"></e-column>
+          <e-column field="ModuleName" headerText="Module Name" width="150" textAlign="Left"
+                    [allowFiltering]="false"></e-column>
+          <e-column field="IsActive" headerText="Is Active" width="120" textAlign="Center" [allowFiltering]="false">
+            <ng-template #template let-data>
+              <div class="text-center">
+                <input type="checkbox" [checked]="data.IsActive" class="form-check-input">
+              </div>
+            </ng-template>
+          </e-column>
+          <e-column field="ImageIcon" headerText="Image Icon" width="150" [allowFiltering]="false"></e-column>
+          <e-column field="DisplayOrder" headerText="Display Order" width="150" [allowFiltering]="false"></e-column>
+          <e-column field="Description" headerText="Description" width="150" [allowFiltering]="false"></e-column>
+          <e-column field="Path" headerText="Path" width="100" [allowFiltering]="false"></e-column>
+          <e-column field="Level" headerText="Level" width="100" [allowFiltering]="false"></e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+    <!-- Right: Form create -->
+    <div class="col-4 p-4 bg-form h-100">
+      <h5 class="fw-bold mb-4">{{'Create' | translate}}</h5>
+      <form (ngSubmit)=" f.form.valid && (is_check_update ? onUpdate() : onSubmit())  " name="formModule" #f='ngForm'
+            novalidate>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Module Code:</label>
+            <input #codeModule='ngModel' type="text" class="form-control" name="codeModule"
+                   [(ngModel)]="valueModule.ModuleCode" [ngClass]="{'is-invalid': f.submitted && codeModule.invalid}"
+                   required/>
+            <span *ngIf="f.submitted&&codeModule.invalid" class="invalid-feedback">Module Code is required.</span>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Image Icon URL:</label>
+            <input type="text" class="form-control" name="ImageIconUrlModule" [(ngModel)]="valueModule.ImageIcon"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Module Name:</label>
+            <input type="text" class="form-control" name="NameModule" [(ngModel)]="valueModule.ModuleName"/>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label">{{'OrgDescription' | translate}}:</label>
+            <input type="text" class="form-control" name="descModule" [(ngModel)]="valueModule.Description"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Parent Module:</label>
+            <ejs-dropdownlist [dataSource]="listModules" [fields]="{text: 'ModuleName', value: 'ModuleID'}"
+                              [(ngModel)]="valueModule.ParentID" [placeholder]="'ChooseModule' | translate"
+                              [allowFiltering]="true"
+                              name="ParentModule">
+            </ejs-dropdownlist>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Display Order:</label>
+            <input type="number" class="form-control" name="displayOrderModule"
+                   [(ngModel)]="valueModule.DisplayOrder"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="levelModuleID">Level:</label>
+            <input type="number" class="form-control" name="levelModule" id="levelModuleID"
+                   [(ngModel)]="valueModule.Level"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-12  d-flex flex-column flex-lg-row gap-2 gap-xl-5">
+            <label class="form-check-label" for="isCheckRole"><input class="form-check-input" type="checkbox"
+                                                                     name="isCheckRoleModule" id="isCheckRole"
+                                                                     [(ngModel)]="valueModule.IsCheckRole"/> Is Check
+              Role</label>
+            <label class="form-check-label" for="isActive"><input class="form-check-input" type="checkbox"
+                                                                  name="isActiveModule" id="isActive"
+                                                                  [(ngModel)]="valueModule.IsActive"/> Is Active</label>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-xl-row gap-3">
+          <button type="submit" class="btn btn-success w-100 w-xl-auto" [disabled]="is_check_update ? ( !f.dirty || !f.valid) : !f.valid">
+            {{ is_check_update ? ('Update' | translate) : ('Create' | translate) }}
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary w-100 w-xl-auto" (click)="onClear(f)">
+            {{'Clear' | translate}}
+          </button>
+
+          <button type="button" [disabled]="valueModule.ModuleID === 0"
+                  class="btn btn-danger w-100 w-xl-auto" (click)="onDeleteClick()">
+            {{'Delete' | translate}}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<app-toast [message]="contentToast" [show]="showToast" [type]="typeToast" (closed)="showToast = false"></app-toast>
+<app-confirm-modal [show]="showConfirmModal" [message]="'Bạn có chắc chắn muốn xoá module này?'"
+                   (confirm)="handleDeleteConfirmed()" (cancel)="showConfirmModal = false">
+</app-confirm-modal>

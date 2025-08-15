@@ -1,0 +1,120 @@
+<div class="container-root">
+  <div class="row h-100">
+    <!--    Left: Table-->
+    <div class="col-8 d-flex flex-column section-list border-end h-100">
+      <div class="w-25" style="height: 6%;">
+        <ejs-dropdownlist [dataSource]="listModulesWithAll" [fields]="{text: 'ModuleName', value:'ModuleCode'}"
+                          [(ngModel)]="valueSearchByModule" [placeholder]="'ChooseModule' | translate" name="ModuleNameInScreen" [allowFiltering]="true" (ngModelChange)="onChangeModule($event)" >
+        </ejs-dropdownlist>
+      </div>
+<!--      Table Grid Data-->
+      <div style="height: 94%">
+        <ejs-grid [dataSource]="listScreen" id="listScreen" [allowPaging]="true" [pageSettings]="pageOptions" [allowSorting]="true" [allowResizing]="true" [allowFiltering]="true"
+                  [showColumnMenu]="true" height="100%" (rowSelected)="onActivate($event)" [toolbar]="screenToolbar" [filterSettings]="filterSetting" [frozenColumns]="1"
+                  [enableHover]="gridConfig.enableHover">
+          <e-columns>
+            <e-column  headerText="STT" textAlign="Center" width="74" [allowFiltering]="false">
+              <ng-template #template let-data>
+                <strong class="text-center">{{data.RowIndex}}</strong>
+              </ng-template>
+            </e-column>
+            <e-column field="ScreenCode" headerText="Screen Code"  width="160" [allowFiltering]="false"></e-column>
+            <e-column field="ScreenName" headerText="Screen Name" width="160" [allowFiltering]="false"></e-column>
+            <e-column field="Type" headerText="Type" width="100" [allowFiltering]="false"></e-column>
+            <e-column field="ModuleCode" headerText="ModuleCode" width="140" [allowFiltering]="false"></e-column>
+            <e-column field="IsActive" headerText="Is Active" textAlign="Center" width="100" [allowFiltering]="false">
+              <ng-template #template let-data>
+                <div class="text-center">
+                  <input type="checkbox" [checked]="data.IsActive" class="form-check-input" style="pointer-events: none" />
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column field="ImageIcon" headerText="Image Icon" width="160" [allowFiltering]="false"></e-column>
+            <e-column field="Description" headerText="Description" width="180" [allowFiltering]="false"></e-column>
+            <e-column field="Numerical" headerText="Numerical" width="140" [allowFiltering]="false"></e-column>
+            <e-column field="IsCheckRole" headerText="Is Check Role" textAlign="Center" width="120" [allowFiltering]="false">
+              <ng-template #template let-data>
+                <div class="text-center">
+                  <input type="checkbox" [checked]="data.IsCheckRole" class="form-check-input" style="pointer-events: none" />
+                </div>
+              </ng-template>
+            </e-column>
+          </e-columns>
+        </ejs-grid>
+      </div>
+    </div>
+    <!--Right: form-->
+    <div class="col-4 p-4 bg-form h-100">
+      <h5 class="fw-bold mb-4">{{'Create' | translate}}</h5>
+      <form name="formScreen" #f="ngForm" novalidate (ngSubmit)="f.form.valid && onInsertUpdate()">
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" >Module:</label>
+            <ejs-dropdownlist [dataSource]="listModules" #moduleCode='ngModel' [fields]="{text: 'ModuleName', value: 'ModuleCode'}"
+                              [(ngModel)]="valueScreen.ModuleCode" (change)="onChangeMode($event)" [allowFiltering]="true" name="moduleCode" [placeholder]="'ChooseModule' | translate" required>
+            </ejs-dropdownlist>
+            <span *ngIf="f.submitted && moduleCode.invalid" class="invalid-feedback">
+              Module is required.
+            </span>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Screen Code:</label>
+            <input name="codeScreen" class="form-control" type="text" [(ngModel)]="valueScreen.ScreenCode"
+                   #codeScreen="ngModel" required [ngClass]="{ 'is-invalid': f.submitted && codeScreen.invalid }"/>
+            <span *ngIf="f.submitted && codeScreen.invalid" class="invalid-feedback">
+              Code is required.
+            </span>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="nameId">Screen Name:</label>
+            <input class="form-control" id="nameId" type="text" name="nameScreen" [(ngModel)]="valueScreen.ScreenName"
+                   #nameScreen='ngModel' [ngClass]="{'is-invalid' : f.submitted && nameScreen.invalid} " required/>
+            <span *ngIf="f.submitted && nameScreen.invalid" class="invalid-feedback">
+              Name is required.
+            </span>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="imageIconid">Image Icon:</label>
+            <input class="form-control" type="text" name="imageIcon" id="imageIconid"
+                   [(ngModel)]="valueScreen.ImageIcon"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="typeid">Type:</label>
+            <input type="text" name="type" id="typeid" class="form-control" [(ngModel)]="valueScreen.Type">
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Description:</label>
+            <input class="form-control" type="text" name="desc" [(ngModel)]="valueScreen.Description"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Display Order:</label>
+            <input type="number" name="displayOrder" class="form-control" [(ngModel)]="valueScreen.DisplayOrder">
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Numerical:</label>
+            <input class="form-control" type="number" name="numerical" [(ngModel)]="valueScreen.Numerical"/>
+          </div>
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="isCheckRoleScreen" name="isCheck"
+                 [(ngModel)]="valueScreen.IsCheckRole">
+          <label class="form-check-label" for="isCheckRoleScreen">Is Check Role</label>
+        </div>
+        <div class="d-flex gap-3 flex-column flex-xl-row">
+          <button type="submit" class="btn btn-success w-100 w-xl-auto" [disabled]="is_Check_Update ? ( !f.dirty || !f.valid) : !f.valid" >{{ !is_Check_Update ? ('Create' | translate) : ('Update' | translate) }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary w-100 w-xl-auto"  (click)="onClear(f)">{{'Clear' | translate}}
+          </button>
+          <button type="button" [disabled]="valueScreen.ScreenID === 0" class="btn btn-danger w-100 w-xl-auto"  (click)="onDeleteScreen()">{{'Delete' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-toast [message]="contentToast" [show]="showToast" [type]="typeToast" (closed)="showToast = false"></app-toast>

@@ -1,0 +1,18 @@
+<div class="modal-backdrop" *ngIf="show"></div>
+<div class="modal" tabindex="-1" [ngClass]="{'show': show}" *ngIf="show" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Huỷ</button>
+        <button type="button" class="btn btn-danger" (click)="onConfirm()">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>

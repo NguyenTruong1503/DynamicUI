@@ -1,0 +1,96 @@
+<div class="container-root">
+  <div class="row h-100">
+    <!--    Left: Table-->
+    <div class="col-8 d-flex flex-column section-list border-end h-100">
+      <!--      Table-->
+      <ejs-grid #grid [dataSource]="listParameters" [allowPaging]="true" [pageSettings]="pageOptions" [allowSorting]="true" [allowResizing]="true"
+                [allowFiltering]="true" [filterSettings]="filterSetting" [showColumnMenu]="true" height="100%" [toolbar]="buttonToolbar"
+                (rowSelected)="onActivate($event)"  [frozenColumns]="1" [enableHover]="gridConfig.enableHover">
+        (rowSelected)="onActivate($event)">
+        <e-columns>
+          <e-column headerText="STT" textAlign="Center" width="100">
+            <ng-template #template let-data>
+              <strong class="text-center">{{getRowIndex(data)}}</strong>
+            </ng-template>
+          </e-column>
+          <e-column field="ParameterCode" headerText="ParameterCode" width="160" [allowFiltering]="false"></e-column>
+          <e-column field="ParameterName" headerText="ParameterName" width="160" [allowFiltering]="false"></e-column>
+          <e-column field="QueryStored" headerText="QueryStored" width="160" [allowFiltering]="false"></e-column>
+          <e-column field="QueryAPI" headerText="QueryAPI" width="160" [allowFiltering]="false"></e-column>
+          <e-column field="ValueField" headerText="ValueField" width="120" [allowFiltering]="false"></e-column>
+          <e-column field="DisplayField" headerText="DisplayField" width="160" [allowFiltering]="false"></e-column>
+          <e-column field="Description" headerText="Description" width="160" [allowFiltering]="false"></e-column>
+          <e-column field="ControlType" headerText="ControlType" width="160" [allowFiltering]="false"></e-column>
+          <e-column field="ValueDefault" headerText='ValueDefault' width="140" [allowFiltering]="false"></e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+    <!--    Right: Form-->
+    <div class="col-4 bg-form p-4 h-100">
+      <h5 class="fw-bold mb-3">{{'Create' | translate}}</h5>
+      <form name="formParameter" #f='ngForm' (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6 ">
+            <label class="form-label" for="codeId">Code:</label>
+            <input class="form-control" #ParamCode='ngModel' type="text" name="codeparameter" id="codeId" [(ngModel)]="valueParameter.ParameterCode" [ngClass]="{'is-invalid': f.submitted && ParamCode.invalid}" required/>
+            <div *ngIf="f.submitted&&ParamCode.invalid" class="invalid-feedback">
+              Parameter Code is required.
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="nameParameterId" >Name:</label>
+            <input class="form-control" id="nameParameterId" name="nameparameter" type="text" [(ngModel)]="valueParameter.ParameterName" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="controlTypeParaID">Control Type:</label>
+            <input class="form-control" type="number" id="controlTypeParaID" name="controlTypeParameter" [(ngModel)]="valueParameter.ControlType" />
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="valueDefaultParameterId" >Value Default:</label>
+            <input class="form-control" id="valueDefaultParameterId" name="valueDefaultParameter" type="text" [(ngModel)]="valueParameter.ValueDefault" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="queryStoredId">Query Stored:</label>
+            <input class="form-control" type="text" name="queryStoredParameter" id="queryStoredId" [(ngModel)]="valueParameter.QueryStored"/>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="valueDisplayParaID" >Value Display Default:</label>
+            <input class="form-control" type="text" id="valueDisplayParaID" name="valueDisplayPara" [(ngModel)]="valueParameter.ValueDisplayDefault"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="queryAPIId">Query API:</label>
+            <input class="form-control" type="text" name="queryAPIParameter" id="queryAPIId" [(ngModel)]="valueParameter.QueryAPI"/>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="valueFieldParaID" >Value Field:</label>
+            <input class="form-control" type="text" id="valueFieldParaID" name="valueFieldPara" [(ngModel)]="valueParameter.ValueField"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="displayFieldId">Display Field:</label>
+            <input class="form-control" type="text" name="displayFieldParameter" id="displayFieldId" [(ngModel)]="valueParameter.DisplayField"/>
+          </div>
+          <div class="col-12 col-lg-6">
+            <label class="form-label" for="descParaID" >Description:</label>
+            <input class="form-control" type="text" id="descParaID" name="descPara" [(ngModel)]="valueParameter.Description"/>
+          </div>
+        </div>
+        <div class="mb-3 d-flex flex-column flex-xl-row gap-3">
+          <button type="submit" class="btn btn-success w-100 me-xl-auto" [disabled]="is_Check_Update ? ( !f.dirty || !f.valid) : !f.valid">{{is_Check_Update ? ('Update' | translate) : ('Create' | translate)}}</button>
+          <button type="button" class="btn btn-outline-secondary w-100 me-xl-auto"  (click)="onClear(f)">{{'Clear' | translate}}</button>
+          <button [disabled]="!is_Check_Update" type="button" class="btn btn-danger w-100 me-xl-auto"
+                  (click)="onDelete()">Xoá
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

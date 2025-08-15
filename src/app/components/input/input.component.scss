@@ -1,0 +1,40 @@
+.truncate-text {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+}
+
+.full-text {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 100;
+  padding: 8px;
+  white-space: normal;
+  max-width: 400px;
+  word-break: break-all;
+}
+
+// Style cho trạng thái inModal, isUpdated, isSelect của input, button, filter, gridheader trong modal
+::ng-deep .e-grid .e-row {
+  &.filter-in-modal {
+    background-color: #7dae63 !important; // Màu xám cho filter đã có
+  }
+
+  &.filter-updated {
+    background-color: #ed8181 !important; // Màu xám cho filter đã có
+    color: white !important;
+  }
+
+  &.filter-newly-added {
+    background-color: #a7b2f4 !important; // Màu xanh cho filter mới
+  }
+
+  &.filter-default {
+    background-color: #ffffff !important; // Màu trắng cho filter chưa chọn
+  }
+}
+
+

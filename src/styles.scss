@@ -1,1 +1,179 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat&family=Roboto&display=swap');
+
+@import '../node_modules/@syncfusion/ej2-bootstrap5-theme/styles/bootstrap5.css';
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// Màu background của form
+.bg-form {
+  background: #f1f5fb;
+  height: 100%;
+}
+
+// Container cha của các fragment
+.container-root {
+  height: 100%;
+
+  .section-list {
+    padding-top: 10px;
+    padding-right: 0;
+  }
+  label {
+    font-size: 14px;
+  }
+}
+
+/* Custom styles for Syncfusion Grid */
+
+.e-grid .e-headercell {
+  background-color: #EBF5FF !important;
+  border: solid 1px #ddd !important;
+}
+
+.e-grid .e-headercell .e-headertext{
+  font-size: 12px;
+}
+
+.e-grid .e-rowcell {
+  border: solid 1px #ddd !important;
+  font-size: 12px;
+}
+
+// Custom row được chọn
+.e-grid .e-row .e-selectionbackground {
+  background-color: #FC653D !important;
+  color: white!important;
+  z-index: 990 !important;
+}
+
+// Custom Search
+
+.e-grid .e-toolbar-items .e-toolbar-item.e-search-wrapper .e-search{
+  width: 350px;
+}
+
+// Custom Dropdown
+.e-ddl.e-input-group {
+  height: 38px !important;
+
+  input.e-input {
+    height: 38px !important;
+    line-height: 38px !important;
+    padding: 0 12px !important;
+  }
+}
+.e-grid .e-toolbar .e-toolbar-item .e-tbar-btn {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border: none !important;
+  transition: background-color 0.2s ease;
+}
+
+.e-grid .e-toolbar .e-toolbar-item .e-tbar-btn:hover {
+  background-color: #f0f0f0 !important; // màu nền khi hover
+  cursor: pointer;
+  color: black !important;
+}
+
+.e-grid .e-toolbar .e-toolbar-item .e-tbar-btn:focus,
+.e-grid .e-toolbar .e-toolbar-item .e-tbar-btn:active {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Tăng font-size và margin cho các nút số trang */
+
+.e-grid .e-numericitem {
+  font-size: 12px;
+  width: auto;
+  display: inline-block;
+  padding: 12px !important;
+}
+
+.e-grid .e-pager  {
+  display: flex;
+  justify-content:start;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+  .e-pagesizes {
+    .e-constant {
+      display: none;
+    }
+    .e-pagerdropdown {
+      margin-top: -0.1rem;
+    }
+  }
+}
+
+// Custom lại footer page
+
+.e-pager {
+  .e-currentitem {
+    border: 0;
+    background-color: #007bff;
+    color: #ffffff;
+    transition: background-color 0.2s ease-in-out;
+    &:hover {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      background-color: rgba(241, 199, 123, 0.47);
+    }
+    &:focus{
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.15);
+      opacity: 10;
+    }
+  }
+  .e-numericitem:not(.e-active):not(.e-np):not(.e-pp):hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgba(241, 199, 123, 0.47);
+  }
+  .e-spacing.e-numericitem:not(.e-active):not(.e-np):not(.e-pp):hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgba(241, 199, 123, 0.47);
+  }
+  .e-currentitem.e-numericitem.e-focused {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+}
+
+// Style cho trạng thái inModal, isUpdated, isSelect của input, button, filter, gridheader trong modal
+.e-grid .e-row {
+  &.filter-in-modal {
+    background-color: #7dae63 !important; // Màu xám cho filter đã có
+  }
+
+  &.filter-updated {
+    background-color: #ed8181 !important; // Màu xám cho filter đã có
+    color: white !important;
+  }
+
+  &.filter-newly-added {
+    background-color: #a7b2f4 !important; // Màu xanh cho filter mới
+  }
+
+  &.filter-default {
+    background-color: #ffffff !important; // Màu trắng cho filter chưa chọn
+  }
+}
+
+
+
+
+
+
+
+
+

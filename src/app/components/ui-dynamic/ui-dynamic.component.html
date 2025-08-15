@@ -1,0 +1,102 @@
+<div class="ui-dynamic-root">
+  <div class="title-container">
+    <p class="title-text">Thông tin {{ activeTitle }}</p>
+    <select class="form-select" style="width: auto; margin-right: 10px" [(ngModel)]="valueLanguage" (ngModelChange)="switchLanguage($event)">
+      <option *ngFor="let lang of listLanguage" [value]="lang.LangID" >{{lang.Title | translate}}</option>
+    </select>
+  </div>
+  <div class="d-flex flex-row mb-2">
+    <ul ngbNav #tab="ngbNav" class="nav nav-tabs nav-tabs--vertical nav-tabs--left" [activeId]="activeTab"
+        [orientation]="'vertical'" [animation]="false" (activeIdChange)="showDatatable = false"
+        (shown)="showDatatable = true">
+      <li [ngbNavItem]="moduleTab">
+        <a ngbNavLink routerLink="." [fragment]="moduleTab" class="nav-tabs--icon">
+          Module
+        </a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-module></app-module>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="screenTab">
+        <a ngbNavLink routerLink="." [fragment]="screenTab" class="nav-tabs--icon">
+          Screen
+        </a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-screen></app-screen>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="modalTab">
+        <a ngbNavLink routerLink="." [fragment]="modalTab" class="nav-tabs--icon">
+          Modal
+        </a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-modal></app-modal>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="inputTab">
+        <a ngbNavLink routerLink="." [fragment]="inputTab" class="nav-tabs--icon">Input</a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-input></app-input>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="buttonTab">
+        <a ngbNavLink routerLink="." [fragment]="buttonTab" class="nav-tabs--icon">Button</a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-button></app-button>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="filterTab">
+        <a ngbNavLink routerLink="." [fragment]="filterTab" class="nav-tabs--icon">Filter</a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-filter></app-filter>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="gridHeaderTab">
+        <a ngbNavLink routerLink="." [fragment]="gridHeaderTab" class="nav-tabs--icon">GridHeader</a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-gridheader></app-gridheader>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="parameterTab">
+        <a ngbNavLink routerLink="." [fragment]="parameterTab" class="nav-tabs--icon">Parameter</a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-parameter></app-parameter>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="cssStyleTab">
+        <a ngbNavLink routerLink="." [fragment]="cssStyleTab" class="nav-tabs--icon">CssStyle</a>
+        <ng-template ngbNavContent>
+          <div class="content-container ps-lg-2">
+            <app-css-style></app-css-style>
+          </div>
+        </ng-template>
+      </li>
+      <!--          <li [ngbNavItem]="jsonFileTab">-->
+      <!--            <a ngbNavLink routerLink="." [fragment]="jsonFileTab" class="nav-tabs&#45;&#45;icon">Json File</a>-->
+      <!--            <ng-template ngbNavContent>-->
+      <!--              <div class="content-container ps-lg-2">-->
+      <!--                <app-json-file></app-json-file>-->
+      <!--              </div>-->
+      <!--            </ng-template>-->
+      <!--          </li>-->
+
+    </ul>
+    <div class="w-100" [ngbNavOutlet]="tab"></div>
+  </div>
+</div>

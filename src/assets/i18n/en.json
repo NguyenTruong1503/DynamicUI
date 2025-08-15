@@ -1,0 +1,49 @@
+{
+  "GLOBAL": {
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "CLEAR": "Clear",
+    "DELETE": "Delete"
+  },
+  "MODULE": {
+    "TITLE_FORM": "Create new Module",
+    "CONTENT_DROPDOWN": "Select Module",
+    "TITLE": "Info Module"
+  },
+  "SCREEN": {
+    "CONTENT_DROPDOWN": "Select Screen",
+    "TITLE_FORM": "Create new Screen",
+    "TITLE": "Info Screen"
+  },
+  "MODAL": {
+    "TITLE_FORM": "Create new Modal",
+    "TITLE": "Info Modal",
+    "CONTENT_DROPDOWN": "Select Modal"
+  },
+  "INPUT": {
+    "TITLE_FORM": "Create new Input",
+    "TITLE": "Info Input"
+  },
+  "BUTTON": {
+    "TITLE_FORM": "Create new Button",
+    "TITLE": "Info Button"
+  },
+  "FILTER": {
+    "TITLE_FORM": "Create new Filter",
+    "TITLE": "Info Filter"
+  },
+  "GRIDHEADER": {
+    "TITLE_FORM": "Create new GridHeader",
+    "TITLE": "Info GridHeader"
+  },
+  "PARAMETER": {
+    "TITLE_FORM": "Create new Parameter",
+    "TITLE": "Info Parameter",
+    "CONTENT_DROPDOWN": "Select Parameter"
+  },
+  "CSSSTYLE": {
+    "TITLE_FORM": "Create new CssStyle",
+    "TITLE": "Info CssStyle",
+    "CONTENT_DROPDOWN": "Select CssStyle"
+  }
+}

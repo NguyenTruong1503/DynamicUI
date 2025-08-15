@@ -1,0 +1,92 @@
+@use "sass:color";
+
+$padding-base: 15px;
+$color-body: transparent;
+$color-border: #ddd;
+$color-right-border: white;
+$border-radius: .25rem;
+$color-header: #296C9A;
+$bg-title: #3996D5;
+$color-active:#003BFF;
+$bg-active:#C8D3FF;
+
+.ui-dynamic-root {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: $color-header;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+
+  .title-text {
+    background-color: $bg-title;
+    padding: 10px;
+    text-decoration: underline;
+    height: 100%;
+    margin: 0;
+  }
+}
+
+.content-container {
+  width: calc(100vw - 146px);
+  height: calc(100vh - 44px);
+}
+
+.nav-tabs {
+  &--vertical {
+    border-bottom: none !important;
+    border-right: 1px solid $color-border;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  &--left {
+
+    .nav-item + .nav-item {
+      margin-top: .25rem;
+    }
+
+    .nav-link {
+      border-radius: $border-radius 0 0 $border-radius !important;
+      transition: border-color .125s ease-in;
+      color: black;
+
+      &:hover {
+        background-color: color.adjust($color-border, $lightness: 10%);
+        border-color: transparent;
+      }
+    }
+
+    .nav-link.active {
+      border-color: $color-border !important;
+      margin-right: -1px;
+      color: $color-active !important;
+      background-color: $bg-active !important;
+      font-weight: bold;
+
+
+      &:hover {
+        cursor: default;
+        background-color: $color-body;
+        border-color: $color-border $color-right-border $color-border $color-border;
+      }
+    }
+  }
+  &--icon {
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}

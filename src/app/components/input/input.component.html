@@ -1,0 +1,186 @@
+<div class="container-root">
+  <div class="row h-100">
+    <!--    Left: Table-->
+    <div class="col-8 d-flex flex-column section-list border-end h-100">
+      <div class="d-flex align-items-start justify-content-between gap-5" style="height: 12%">
+        <div class="d-flex align-items-center justify-content-start gap-5">
+          <div>
+            <label class="form-label">{{ 'ChooseScreen' | translate }}:</label>
+            <ejs-dropdownlist [dataSource]="listScreens" [fields]="{text: 'ScreenName', value: 'ScreenID'}"
+                              [(ngModel)]="valueSelectedScreen" [placeholder]="'ChooseScreen' | translate"
+                              [allowFiltering]="true"
+                              name="Screen" (ngModelChange)="onChangeScreen($event)">
+            </ejs-dropdownlist>
+          </div>
+          <div>
+            <label class="form-label">{{ 'ChooseModal' | translate }}:</label>
+            <ejs-dropdownlist [disabled]="valueSelectedScreen==''" [dataSource]="listModalByScreen"
+                              [fields]="{text: 'ModalName', value: 'ModalID'}"
+                              [(ngModel)]="valueSelectedModal" [placeholder]="'ChooseModal' | translate"
+                              [allowFiltering]="true" (ngModelChange)="onChangeModal($event)"
+                              name="ModalByScreen">
+            </ejs-dropdownlist>
+          </div>
+        </div>
+        <div class="flex-grow-1  d-flex justify-content-end mb-3 gap-3" style="margin-right: 1rem; margin-top: 2rem">
+          <button [disabled]="!is_CheckUpdateInputOfModal" type="button" class="btn btn-success" style="min-width: 100px"
+          (click)="onSave()">{{ 'Save' | translate }}</button>
+          <button [disabled]="!is_CheckUpdateInputOfModal"  type="button" class="btn btn-secondary" style="min-width: 100px" (click)="onResetChoose()"
+                  >{{ 'Reset' | translate }}
+          </button>
+        </div>
+      </div>
+      <div style="height: 88%">
+        <ejs-grid class="" #grid [dataSource]="processedInput" id="listInput" [allowPaging]="true" [pageSettings]="pageOptions"
+                  [allowFiltering]="true" [allowSorting]="true" height="100%" (rowDataBound)="rowDataBound($event)"
+                  [showColumnMenu]="true" [allowResizing]="true" (rowSelected)="onActivate($event)" (rowDeselected)="onDeActivate($event)"
+                  [toolbar]="inputToolbar" [filterSettings]="filterSetting" [frozenColumns]='1'
+                  [enableHover]="gridConfig.enableHover" [sortSettings]="valueSelectedModal!='' ? gridConfig.sortSettings : {}">
+          <e-columns>
+            <e-column field="isSelected" headerText="" width="40" [allowFiltering]="false">
+              <ng-template #template let-data>
+                <div class="text-center">
+                  <input type="checkbox" class="form-check-input"
+                         [checked]="data.isSelected"
+                         (change)="onCheckboxChange(data, $event)"
+                  [disabled]="!hasModalSelected()" (click)="$event.stopPropagation()" />
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column *ngIf="valueSelectedModal !== ''" field="DisplayOrder" headerText="DisplayOrder" width="140"
+                      [allowFiltering]="true" [allowSorting]="true">
+              <ng-template #template let-data>
+                <div class="text-center" >
+                  <input type="number" class="form-control form-control-sm" [value]="data.DisplayOrder" min="0"
+                         [max]="listInput.length" [disabled]="!data.isSelected" (change)="onDisplayOrderChange(data, $event)"
+                         style="width: 80px; text-align: center;" (click)="$event.stopPropagation()"/>
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column headerText="STT" textAlign="Center" [allowFiltering]="false" width="74">
+              <ng-template #template let-data>
+                <strong>{{ getRowIndex(data) }}</strong>
+              </ng-template>
+            </e-column>
+            <e-column field="InputCode" headerText="Input Code" width="150" [allowFiltering]="false"></e-column>
+            <e-column field="InputName" headerText="Input Name" width="150" [allowFiltering]="false"></e-column>
+            <e-column field="ParameterCode" headerText="Parameter Code" width="150" [allowFiltering]="false"></e-column>
+            <e-column field="Description" headerText="Description" [allowFiltering]="false"></e-column>
+            <e-column field="IsActive" headerText="Is Active" width="120" textAlign="Center" [allowFiltering]="false">
+              <ng-template #template let-data>
+                <div class="text-center">
+                  <input type="checkbox"
+                         [checked]="data.IsActive"
+                         class="form-check-input"
+                         style="pointer-events: none;"/>
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column field="Reference" headerText="Reference" [allowFiltering]="false"></e-column>
+            <e-column field="StyleCode" headerText="Style Code" width="120" [allowFiltering]="false"></e-column>
+            <e-column field="Placeholder" headerText="Placeholder" width="140" [allowFiltering]="false"></e-column>
+            <e-column field="IsRequired" headerText="Is Required" width="140" textAlign="Center" [allowFiltering]="false">
+              <ng-template #template let-data>
+                <div class="text-center">
+                  <input type="checkbox" [checked]="data.IsRequired" class="form-check-input"
+                         style="pointer-events: none"/>
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column field="ReferenceDisplay" headerText="ReferenceDisplay" width="160"
+                      [allowFiltering]="false"></e-column>
+            <e-column field="isUpdated" headerText="isUpdated" [visible]="false" [allowFiltering]="true" [allowSorting]="true"></e-column>
+          </e-columns>
+        </ejs-grid>
+      </div>
+    </div>
+    <!--    Right: Form-->
+    <div class="col-4 bg-form p-4 h-100">
+      <h5 class="fw-bold mb-3">{{ 'Create' | translate }}</h5>
+      <form name="formInput" #f='ngForm' (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+        <div class="row mb-3">
+          <div class="col-12 col-lg">
+            <label class="form-label" for="codeId">Code:</label>
+            <input #InputCode='ngModel' class="form-control" type="text" name="codeInput" id="codeId"
+                   [(ngModel)]="valueInput.InputCode" [ngClass]="{'is-invalid': f.submitted&&InputCode.invalid}"
+                   required/>
+            <div *ngIf="f.submitted&&InputCode.invalid" class="invalid-feedback">
+              InputCode is required.
+            </div>
+          </div>
+          <div class="col-12 col-lg">
+            <label class="form-label" for="nameInputId">Name:</label>
+            <input class="form-control" id="nameInputId" name="nameInput" type="text"
+                   [(ngModel)]="valueInput.InputName"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg">
+            <label class="form-label">Parameter:</label>
+            <ejs-dropdownlist [dataSource]="listParameter" [fields]="{text: 'ParameterCode', value:'ParameterCode'}"
+                              [(ngModel)]="valueInput.ParameterCode" [placeholder]="'ChooseParameter' | translate"
+                              [allowFiltering]="true" name="parameterCode">
+            </ejs-dropdownlist>
+          </div>
+          <div class="col-12 col-lg">
+            <label class="form-label" for="descInputId">Description:</label>
+            <input class="form-control" id="descInputId" name="descInput" type="text"
+                   [(ngModel)]="valueInput.Description"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg">
+            <label class="form-label" for="refId">Reference:</label>
+            <input class="form-control" type="text" name="refInput" id="refId" [(ngModel)]="valueInput.Reference"/>
+          </div>
+          <div class="col-12 col-lg">
+            <label class="form-label" for="placeInputId">Placeholder:</label>
+            <input class="form-control" id="placeInputId" name="placeInput" type="text"
+                   [(ngModel)]="valueInput.Placeholder"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <label class="form-label">Style:</label>
+            <ejs-dropdownlist [dataSource]="listStyle" [fields]="{text:'StyleCode', value: 'StyleCode'}"
+                              [(ngModel)]="valueInput.StyleCode"
+                              [placeholder]="'ChooseStyle' | translate"
+                              [allowFiltering]="true" name="StyleCode">
+              <ng-template #itemTemplate let-data>
+                <div>{{ data.StyleName }} --- {{ data.StyleCode }}</div>
+              </ng-template>
+              <ng-template #valueTemplate let-data>
+                <div style="padding: 10px; white-space: nowrap;overflow: hidden;">
+                  {{ data.StyleName }} --- {{ data.StyleCode }}
+                </div>
+              </ng-template>
+            </ejs-dropdownlist>
+          </div>
+
+        </div>
+        <div class="mb-3 row">
+          <div class=" col-12 d-flex flex-column flex-lg-row gap-2 gap-lg-5">
+            <label class="form-check-label"><input class="form-check-input" type="checkbox" name="isRequired"
+                                                   [(ngModel)]="valueInput.IsRequired"/> Is Required</label>
+            <label class="form-check-label"><input class="form-check-input" type="checkbox" name="isActive"
+                                                   [(ngModel)]="valueInput.IsActive"/> Is Active</label>
+          </div>
+        </div>
+        <div class="mb-3 d-flex flex-column flex-xl-row gap-3">
+          <button type="submit" class="btn btn-success w-100 w-xl-auto"
+                  [disabled]="is_Check_Update ? ( !f.dirty || !f.valid) : !f.valid">{{
+              is_Check_Update ? ('Update' | translate) :
+                ('Create' | translate)
+            }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary w-100 w-xl-auto"
+                  (click)="onClear(f)">{{ 'Clear' | translate }}
+          </button>
+          <button [disabled]="!is_Check_Update" type="button" (click)="onDeleteRow()" class="btn btn-danger w-100 me-xl-auto"
+          >{{ 'Delete' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
