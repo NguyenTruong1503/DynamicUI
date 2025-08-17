@@ -119,7 +119,7 @@ export class ButtonComponent implements OnInit{
     const row = e.row as HTMLElement;
     if (data.isUpdated) {
       row.classList.add('filter-updated');
-    } else if (data.isInModal && !data.isNewlyAdded && data.DisplayOrder > 0) {
+    } else if (data.isInModal && !data.isNewlyAdded) {
       row.classList.add('filter-in-modal');
     } else if (data.isNewlyAdded) {
       row.classList.add('filter-newly-added');
@@ -137,7 +137,7 @@ export class ButtonComponent implements OnInit{
   // Hàm xử lý lưu button vào modal
   async onSave() {
     if (this.is_CheckUpdateButtonOfModal) {
-      let dataInput = this.listProcessButtonOfModal.filter(button => button.isNewlyAdded || button.isUpdated || (button.isInModal && button.isSelected));
+      let dataInput = this.listProcessButtonOfModal.filter(button =>  button.isSelected);
       // this.normalizeDisplayOrder(dataInput);
       let dataButton = dataInput.map(btn => ({
         ButtonID: btn.ButtonID,
@@ -388,7 +388,7 @@ export class ButtonComponent implements OnInit{
   // Hàm thêm các biến xử lý
   processButtonOfModal(){
     this.listProcessButtonOfModal = this.listButtons.map((button: any) => {
-      const buttonModal = this.listButtonOfModal.find((bm: any) => bm.ButtonID === button.ButtonID && bm.DisplayOrder > 0);
+      const buttonModal = this.listButtonOfModal.find((bm: any) => bm.ButtonID === button.ButtonID );
       if (buttonModal) {
         return {
           ...button,

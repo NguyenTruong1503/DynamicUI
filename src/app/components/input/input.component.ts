@@ -141,7 +141,7 @@ export class InputComponent implements OnInit {
 
   // Hàm xử lý Save Insert Update Input vào modal
   async onSave(){
-    let data = this.processedInput.filter((inp: any) => inp.isNewlyAdded || inp.isUpdated || (inp.isInModal && inp.isSelected));
+    let data = this.processedInput.filter((inp: any) =>  inp.isSelected);
     // this.normalizeDisplayOrder(data);
     let dataInput = data.map((inp: any) => ({
       InputID: inp.InputID,
@@ -157,7 +157,7 @@ export class InputComponent implements OnInit {
     const row = e.row as HTMLElement;
     if (data.isUpdated) {
       row.classList.add('filter-updated');
-    } else if (data.isInModal && !data.isNewlyAdded && data.DisplayOrder > 0) {
+    } else if (data.isInModal && !data.isNewlyAdded) {
       row.classList.add('filter-in-modal');
     } else if (data.isNewlyAdded) {
       row.classList.add('filter-newly-added');
@@ -200,7 +200,7 @@ export class InputComponent implements OnInit {
     if (isChecked) {
       this.processedInput = this.processedInput.map((input: any) => {
         if (input.InputID === row.InputID) {
-          let newDisplayOrder = 1;
+          let newDisplayOrder = 0;
           if ((this.valueSelectedModal && this.listInputByModal.length > 0) || (this.valueSelectedModal && this.processedInput.length > 0)) {
             const maxDisplayOrder = Math.max(0, ...this.processedInput.map((i: any) => i.DisplayOrder));
             newDisplayOrder = maxDisplayOrder + 1;
@@ -401,7 +401,7 @@ export class InputComponent implements OnInit {
   // Hàm xử lý thêm và update các thuoc tín ở listInput để xử lý hiển thị
   processInputsDisplay() {
     this.processedInput = this.listInput.map(input => {
-      const modalInput = this.listInputByModal.find(item => item.InputID === input.InputID && item.DisplayOrder > 0);
+      const modalInput = this.listInputByModal.find(item => item.InputID === input.InputID);
       if (modalInput) {
         return {
           ...input,

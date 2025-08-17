@@ -50,7 +50,7 @@
       <h5 class="fw-bold mb-4">{{'Create' | translate}}</h5>
       <form name="formModal" #f="ngForm" novalidate (ngSubmit)="f.form.valid &&onInsertUpdate()">
         <div class="row mb-3">
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label" for="screenid">Screen:</label>
             <ejs-dropdownlist #screenid='ngModel' id="screenid" [dataSource]="listScreen" [fields]="{text: 'ScreenName', value:'ScreenID'}"
             [(ngModel)]="valueModal.ScreenID" [placeholder]="'ChooseScreen' | translate" [allowFiltering]="true" name="screenOfModal">
@@ -59,7 +59,7 @@
               Screen is required.
             </span>
           </div>
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label">Code:</label>
             <input
               name="codeModal"
@@ -77,7 +77,7 @@
 
         </div>
         <div class="row mb-3">
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label" for="nameId">Name:</label>
             <input class="form-control" id="nameId" type="text" name="nameModal" [(ngModel)]="valueModal.ModalName"
                    #nameModal='ngModel' [ngClass]="{'is-invalid' : f.submitted && nameModal.invalid} " required/>
@@ -85,34 +85,34 @@
             Name is required.
           </span>
           </div>
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label" for="imageIconid">Image Icon:</label>
             <input class="form-control" type="text" name="imageIcon" id="imageIconid"
                    [(ngModel)]="valueModal.ImageIcon"/>
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label" for="typeid">Type:</label>
             <input type="text" name="type" id="typeid" class="form-control" [(ngModel)]="valueModal.Type">
           </div>
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label">Description:</label>
             <input class="form-control" type="text" name="desc" [(ngModel)]="valueModal.Description"/>
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label">Display Order:</label>
             <input type="number" name="displayOrder" class="form-control" [(ngModel)]="valueModal.DisplayOrder">
           </div>
-          <div class="col">
+          <div class="col-12 col-lg-6">
             <label class="form-label">Numerical:</label>
             <input class="form-control" type="number" name="numerical" [(ngModel)]="valueModal.Numerical"/>
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col-6">
+          <div class="col-12 col-lg-6">
             <label class="form-label">Style:</label>
             <ejs-dropdownlist [dataSource]="listStyleCss" [fields]="{text: 'StyleCode', value:'StyleCode'}"
                               [(ngModel)]="valueModal.StyleCode" [placeholder]="'ChooseStyle' | translate" [allowFiltering]="true" name="styleOfModal">
@@ -121,6 +121,12 @@
               </ng-template>
             </ejs-dropdownlist>
           </div>
+<!--          <div class="col-12 col-lg-6">-->
+<!--            <label class="form-label">Parent Modal:</label>-->
+<!--            <ejs-dropdownlist [dataSource]="listModal" [fields]="{text: 'ModalCode', value:'ModalID'}"-->
+<!--                              [(ngModel)]="valueModal.ModalID" [placeholder]="'Choose Modal Parent'" [allowFiltering]="true" name="styleOfModal">-->
+<!--            </ejs-dropdownlist>-->
+<!--          </div>-->
         </div>
         <div class="mb-3 row">
           <div class=" col-12 d-flex flex-column flex-lg-row  gap-2 gap-lg-5">

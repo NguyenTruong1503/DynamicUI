@@ -131,7 +131,7 @@ export class GridheaderComponent implements OnInit{
   // Hàm lưu insert update GridHeader cho modal
   async onSaveGridHeaderOfModal() {
     this.is_CheckUpdateGridHeaderOfModal = false;
-    const data = this.listProcessGridHeaders.filter(item => item.isUpdated || item.isNewlyAdded || (item.isInModal && item.isSelected));
+    const data = this.listProcessGridHeaders.filter(item => item.isSelected);
     // this.normalizeDisplayOrder(data);
     const dataInput = data.map((item) => ({
       GridHeaderID: item.GridHeaderID,
